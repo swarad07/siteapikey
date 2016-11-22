@@ -2,11 +2,11 @@
 
 ## Background Information
 
-When logged in as the administrator, the "Site Information" form can be found at the path /admin/config/system/site-information.
+When logged in as the administrator, the "Site Information" form can be found at the path /admin/config/system/site-information. This module adds a site api key textfield here which can be used to get nodes in JSON formats.
 
-## Requirements
+## Features
 
-This module needs to alter the existing Drupal "Site Information" form. Specifics:
+This module alter the existing Drupal "Site Information" form.
 
 * A new form text field named "Site API Key" needs to be added to the "Site Information" form with the default value of “No API Key yet”.
 * When this form is submitted, the value that the user entered for this field should be saved as the system variable named "siteapikey".
@@ -33,3 +33,5 @@ http://localhost/page_json/FOOBAR12345/17
 * Push the module as a public repo in GitHub and submit the link to it below. *
 
 https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_form_FORM_ID_alter/7.x
+https://api.drupal.org/api/drupal/developer!topics!forms_api_reference.html/7.x/
+https://api.drupal.org/api/drupal/includes!common.inc/function/drupal_json_output/7.x

@@ -30,4 +30,60 @@ function siteapikey_form_system_site_information_settings_alter(&$form, &$form_s
 /**
  * Implements hook_menu().
  */
-function
+function siteapikey_menu() {
+  $items['page_json/%/%'] = array(
+    'title' => t('Node Object return Endpoint.'),
+    'page callback' => '_node_json_api_callback',
+    'page arguments' => array(1,2),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Node JSON view callback.
+ */
+function _node_json_api_callback($site_api_key, $node_id) {
+  // Get the value stored in system for site api key.
+  $key = variable_get('siteapikey');
+
+  // Check if value is set yet, if no we don't want to proceed further.
+  // We also check at the same time if the provided value for $site_api_key
+  // matches the stotred value.
+  if($key == NULL || $key != $site_api_key) {
+    $response = array(
+      'ack_code' => 10001,
+      'error_message' => t('Site API Key is invalid.')
+    );
+    return drupal_json_output($response);
+  }
+
+  // We check for node id being valid.
+  if(is_int($node_id) && $node_id > 0) {
+    $node_object = node_load($node_id);
+
+    // Check for type of the node.
+    if($node_object != FALSE && $node->type == 'page') {
+      $response = array(
+        'ack_code' => 20001,
+        'response' => $node_object,
+      );
+      return drupal_json_output($response);
+    }
+    else{
+      $response = array(
+        'ack_code' => 10003,
+        'error_message' => t('Node ID is invalid or not of type "Page"')
+      );
+      return drupal_json_output($response);
+    }
+  }
+  else {
+    $response = array(
+      'ack_code' => 10002,
+      'error_message' => t('Node ID is not an integer value.')
+    );
+    return drupal_json_output($response);
+  }
+}
