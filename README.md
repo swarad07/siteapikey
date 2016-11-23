@@ -15,8 +15,8 @@ This module alters the existing Drupal "Site Information" form.
 
 http://example.com/page_json/FOOBAR12345/17
 
-Argument 1 = FOOBAR12345 = Site API Key
-Argument 2 = 17          = Node ID
+* Argument 1 = FOOBAR12345 = Site API Key
+* Argument 2 = 17          = Node ID
 
 ## Response Codes
 
