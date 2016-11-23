@@ -18,6 +18,11 @@ http://example.com/page_json/FOOBAR12345/17
 * Argument 1 = FOOBAR12345 = Site API Key
 * Argument 2 = 17          = Node ID
 
+## Usage
+* Install the module.
+* Go to Site Information page and set a Site API Key.
+* Use the API Key as argument 1 to get JSON response for a node of type page.
+
 ## Response Codes
 
 ###Success
