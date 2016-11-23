@@ -2,40 +2,60 @@
 
 /**
  * @file
- * Contains complex business logic for siteapikey module.
+ * Contains "complex" business logic for siteapikey module.
  */
 
 /**
  * Implements hook_form_FORM_ID_alter().
  */
 function siteapikey_form_system_site_information_settings_alter(&$form, &$form_state, $form_id) {
-  // Adding a fieldset for our textfield.
+  // Adding a fieldset for our siteapikey textfield.
   $form['siteapikey_fieldset'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Site API Key'), 
-    '#weight' => 5, 
+    '#title' => t('Site API Key'),
+    '#weight' => -5,
     '#collapsible' => FALSE,
   );
+
   // Adding the siteapikey textfield.
   $form['siteapikey_fieldset']['siteapikey'] = array(
     '#type' => 'textfield',
-    '#title' => t('Site API Key'), 
+    '#title' => t('Site API Key'),
     '#default_value' => variable_get('siteapikey', t('No API Key yet')),
     '#required' => TRUE,
   );
 
   // Check if the variable is set, if yes change our submit button name.
+  if(variable_get('siteapikey') != NULL) {
+    $form['actions']['submit']['#value'] = t('Update Configuration');
+  }
+
+  // Add a submit callback to show user message upon saving API key.
+  $form['#submit'][] = '_siteapikey_system_site_information_settings_submit_callback';
+}
+
+/**
+ * Custom submit callback.
+ */
+function _siteapikey_system_site_information_settings_submit_callback(&$form, &$form_state) {
+  // Fetch from form_state instead of variable_get to avoid a DB call.
+  $api_key = $form_state['values']['siteapikey'];
+  drupal_set_message(t('Site API Key has been saved with the value: @api_key', array('@api_key' => $api_key)));
 }
 
 /**
  * Implements hook_menu().
  */
 function siteapikey_menu() {
+  // We create a MENU_CALLBACK as we dont need theme rendering here,
+  // Also, pass two arguments so we dont have to explicitly check for them in
+  // our callback.
   $items['page_json/%/%'] = array(
     'title' => t('Node Object return Endpoint.'),
     'page callback' => '_node_json_api_callback',
     'page arguments' => array(1,2),
     'type' => MENU_CALLBACK,
+    'access arguments' => array('access content'),
   );
 
   return $items;
@@ -48,23 +68,27 @@ function _node_json_api_callback($site_api_key, $node_id) {
   // Get the value stored in system for site api key.
   $key = variable_get('siteapikey');
 
-  // Check if value is set yet, if no we don't want to proceed further.
-  // We also check at the same time if the provided value for $site_api_key
-  // matches the stotred value.
-  if($key == NULL || $key != $site_api_key) {
+  // Check if key is not set, administrator forgot to configure the key!
+  // Leave him a firendly watchdog.
+  // We also check if the provided value for $site_api_key matches the stotred
+  // value.
+  if($key == NULL || $key != check_plain($site_api_key)) {
     $response = array(
       'ack_code' => 10001,
       'error_message' => t('Site API Key is invalid.')
+    );
+    watchdog('siteapikey', t('No Site API key set.'), array(), WATCHDOG_ERROR,
+      l(t('Site Information'), 'admin/config/system/site-information')
     );
     return drupal_json_output($response);
   }
 
   // We check for node id being valid.
-  if(is_int($node_id) && $node_id > 0) {
+  if(is_numeric(check_plain($node_id)) && check_plain($node_id) > 0) {
     $node_object = node_load($node_id);
 
     // Check for type of the node.
-    if($node_object != FALSE && $node->type == 'page') {
+    if($node_object != FALSE && $node_object->type == 'page') {
       $response = array(
         'ack_code' => 20001,
         'response' => $node_object,
@@ -74,7 +98,7 @@ function _node_json_api_callback($site_api_key, $node_id) {
     else{
       $response = array(
         'ack_code' => 10003,
-        'error_message' => t('Node ID is invalid or not of type "Page"')
+        'error_message' => t('Node ID is invalid or not of type: Page')
       );
       return drupal_json_output($response);
     }

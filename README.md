@@ -35,3 +35,4 @@ http://localhost/page_json/FOOBAR12345/17
 https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_form_FORM_ID_alter/7.x
 https://api.drupal.org/api/drupal/developer!topics!forms_api_reference.html/7.x/
 https://api.drupal.org/api/drupal/includes!common.inc/function/drupal_json_output/7.x
+https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Component%21Render%21FormattableMarkup.php/function/FormattableMarkup%3A%3AplaceholderFormat/8.2.x
