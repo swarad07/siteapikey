@@ -1,4 +1,4 @@
-# Create a custom Drupal 7 module
+# Instructions
 
 ## Background Information
 
@@ -20,10 +20,10 @@ Argument 2 = 17          = Node ID
 
 ## Response Codes
 
-#Success
+###Success
 * 20001 - Success
 
-#Error
+###Error
 * 10001 - Site API key is not set or is invalid.
 * 10002 - Node ID passed is not a numeric value or is not greater than 0.
 * 10003 - Node ID doesnot exist or is not of type page.
