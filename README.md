@@ -39,3 +39,5 @@ https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hoo
 https://api.drupal.org/api/drupal/developer!topics!forms_api_reference.html/7.x/
 https://api.drupal.org/api/drupal/includes!common.inc/function/drupal_json_output/7.x
 https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Component%21Render%21FormattableMarkup.php/function/FormattableMarkup%3A%3AplaceholderFormat/8.2.x
+
+Total time take was approximately 1.5hrs.
