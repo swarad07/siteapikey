@@ -26,7 +26,7 @@ function siteapikey_form_system_site_information_settings_alter(&$form, &$form_s
   );
 
   // Check if the variable is set, if yes change our submit button name.
-  if(variable_get('siteapikey') != NULL) {
+  if (variable_get('siteapikey') != NULL) {
     $form['actions']['submit']['#value'] = t('Update Configuration');
   }
 
@@ -51,9 +51,9 @@ function siteapikey_menu() {
   // Also, pass two arguments so we dont have to explicitly check for them in
   // our callback.
   $items['page_json/%/%'] = array(
-    'title' => t('Node Object return Endpoint.'),
+    'title' => 'Node Object return Endpoint.',
     'page callback' => '_node_json_api_callback',
-    'page arguments' => array(1,2),
+    'page arguments' => array(1, 2),
     'type' => MENU_CALLBACK,
     'access arguments' => array('access content'),
   );
@@ -72,23 +72,23 @@ function _node_json_api_callback($site_api_key, $node_id) {
   // Leave him a firendly watchdog.
   // We also check if the provided value for $site_api_key matches the stotred
   // value.
-  if($key == NULL || $key != check_plain($site_api_key)) {
+  if ($key == NULL || $key != check_plain($site_api_key)) {
     $response = array(
       'ack_code' => 10001,
       'error_message' => t('Site API Key is invalid.')
     );
-    watchdog('siteapikey', t('No Site API key set.'), array(), WATCHDOG_ERROR,
+    watchdog('siteapikey', 'No Site API key set.', array(), WATCHDOG_ERROR,
       l(t('Site Information'), 'admin/config/system/site-information')
     );
     return drupal_json_output($response);
   }
 
   // We check for node id being valid.
-  if(is_numeric(check_plain($node_id)) && check_plain($node_id) > 0) {
+  if (is_numeric(check_plain($node_id)) && check_plain($node_id) > 0) {
     $node_object = node_load($node_id);
 
     // Check for type of the node.
-    if($node_object != FALSE && $node_object->type == 'page') {
+    if ($node_object != FALSE && $node_object->type == 'page') {
       $response = array(
         'ack_code' => 20001,
         'response' => $node_object,

@@ -9,11 +9,17 @@
  * Implements hook_install().
  */
 function siteapikey_install() {
-  drupal_set_message(t('Please !click here to set a Site API Key.',
-    array(
-      '!click' => l(t('Click Here'), 'admin/config/system/site-information')
+  // $message = st('Please @click here to set a Site API Key.',
+  //   array(
+  //     '@click' => l(st('Click Here'), 'admin/config/system/site-information')
+  //   )
+  // );
+  // drupal_set_message($message);
+  $link = url('admin/config/system/site-information');
+  drupal_set_message(st('Please <a href="@link" target="_blank">Click</a> here to set the Site API key.',
+    array('@link' => $link)
     )
-  ));
+  );
 }
 
 /**
