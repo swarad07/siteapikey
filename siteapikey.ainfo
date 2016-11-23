@@ -1,4 +1,0 @@
-name = Site API key
-description = Provides a custom API key field, along with a JSON web API for node. 
-core = 7.x
-package = Custom
