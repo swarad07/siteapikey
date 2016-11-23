@@ -28,10 +28,7 @@ http://example.com/page_json/FOOBAR12345/17
 * 10002 - Node ID passed is not a numeric value or is not greater than 0.
 * 10003 - Node ID doesnot exist or is not of type page.
 
-## Test Submission
-
-* Set up your github.com account if you don't already have one.
-* Push the module as a public repo in GitHub and submit the link to it below. *
+## Reference links used
 
 https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_form_FORM_ID_alter/7.x
 https://api.drupal.org/api/drupal/developer!topics!forms_api_reference.html/7.x/
