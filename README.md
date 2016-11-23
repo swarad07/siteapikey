@@ -2,30 +2,31 @@
 
 ## Background Information
 
-When logged in as the administrator, the "Site Information" form can be found at the path /admin/config/system/site-information. This module adds a site api key textfield here which can be used to get nodes in JSON formats.
+When logged in as the administrator, the "Site Information" form can be found at the path /admin/config/system/site-information. This module adds a site api key textfield here which can be used to get nodes in JSON format.
 
 ## Features
 
-This module alter the existing Drupal "Site Information" form.
+This module alters the existing Drupal "Site Information" form.
 
-* A new form text field named "Site API Key" needs to be added to the "Site Information" form with the default value of “No API Key yet”.
-* When this form is submitted, the value that the user entered for this field should be saved as the system variable named "siteapikey".
-* A Drupal message should inform the user that the Site API Key has been saved with that value.
-* When this form is visited after the "Site API Key" is saved, the field should be populated with the correct value.
-* The text of the "Save configuration" button should change to "Update Configuration".
-* This module also provides a URL that responds with a JSON representation of a given node with the content type "page" only if the previously submitted API Key and a node id (nid) of an appropriate node are present, otherwise it will respond with "access denied".
+* Add a API key.
+* Use the API key to get JSON for a node object.
 
 ## Example URL
 
-http://localhost/page_json/FOOBAR12345/17
+http://example.com/page_json/FOOBAR12345/17
 
-## Test Evaluation
+Argument 1 = FOOBAR12345 = Site API Key
+Argument 2 = 17          = Node ID
 
-* Meeting above requirements
-* Utilising Drupal-specific solutions (hooks, APIs, etc.))
-* Readability of code
-* Clear, concise commenting
-* List of resources used if any (Internet sites, books, previous knowledge) Total time to complete task
+## Response Codes
+
+#Success
+* 20001 - Success
+
+#Error
+* 10001 - Site API key is not set or is invalid.
+* 10002 - Node ID passed is not a numeric value or is not greater than 0.
+* 10003 - Node ID doesnot exist or is not of type page.
 
 ## Test Submission
 
